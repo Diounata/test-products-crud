@@ -26,6 +26,7 @@ export function useSignInUser() {
     async ({ email, password }) => {
       const response = await signInMutation.mutateAsync({ email, password });
 
+      window.localStorage.setItem("accessToken", response.data.token);
       await setAccessTokenCookie(response.data.token);
 
       addToast({

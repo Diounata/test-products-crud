@@ -38,6 +38,7 @@ export function useSignUpUser() {
         },
       });
 
+      window.localStorage.setItem("accessToken", response.data.token);
       await setAccessTokenCookie(response.data.token);
 
       addToast({

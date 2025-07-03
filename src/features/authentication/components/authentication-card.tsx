@@ -16,7 +16,7 @@ export function AuthenticationCard({ type }: PropsWithChildren<Props>) {
   return (
     <Card className="w-full max-w-lg p-4 shadow-none sm:shadow-md">
       <CardHeader className="flex-col gap-4">
-        <DynamicLogo />
+        <DynamicLogo type="FULL" />
         <h1 className="text-center text-2xl font-medium">
           {type === "SIGN-IN" ? "Entrar" : "Registrar conta"}
         </h1>

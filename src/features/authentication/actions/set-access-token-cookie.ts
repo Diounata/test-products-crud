@@ -1,7 +1,7 @@
 "use server";
 import { decodeJwt } from "jose";
 import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
+import { redirect, RedirectType } from "next/navigation";
 
 import { configuration } from "@/lib/config/configuration";
 
@@ -16,10 +16,5 @@ export async function setAccessTokenCookie(accessToken: string) {
     path: "/",
   });
 
-  return NextResponse.redirect(
-    new URL(
-      configuration.paths.dashboard,
-      process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000",
-    ),
-  );
+  redirect(configuration.paths.dashboard, RedirectType.replace);
 }

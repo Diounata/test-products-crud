@@ -1,32 +1,34 @@
 import { z } from "zod";
 
-import { formErrors } from "../form-errors";
+const MAX_SIZE = 5 * 1024 * 1024;
+const ACCEPTED_TYPES = ["image/jpeg", "image/png", "image/webp"];
 
-const MAX_FILE_SIZE_IN_MB = 2; // 2 mb
-const MAX_FILE_SIZE_IN_BYTES = 1024 * 1024 * MAX_FILE_SIZE_IN_MB; // 2 mb in bytes
-const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
-
-interface Props {
-  isOptional?: boolean;
-}
-
-export const image = ({ isOptional = false }: Props) =>
+export const image = ({ isOptional = false }: { isOptional?: boolean } = {}) =>
   z
-    .custom<FileList>()
+    .any()
     .refine(
-      (files) => isOptional || (files && files.length !== 0),
-      formErrors.required,
+      (file) => {
+        if (!file && !isOptional) return false;
+        if (!file) return true;
+
+        return file instanceof File;
+      },
+      { message: "Arquivo inválido" },
     )
     .refine(
-      (files) =>
-        !files || files.length === 0 || files[0].size <= MAX_FILE_SIZE_IN_BYTES,
-      formErrors.image.exceededFileSize(MAX_FILE_SIZE_IN_MB),
+      (file) => {
+        if (!file) return true;
+
+        return file.size <= MAX_SIZE;
+      },
+      { message: "Imagem muito grande (máx. 5MB)" },
     )
     .refine(
-      (files) =>
-        !files ||
-        files.length === 0 ||
-        ACCEPTED_IMAGE_TYPES.includes(files[0].type),
-      formErrors.image.invalidFileType,
+      (file) => {
+        if (!file) return true;
+
+        return ACCEPTED_TYPES.includes(file.type);
+      },
+      { message: "Formato de imagem inválido" },
     )
-    .transform((files) => (files && files.length > 0 ? files[0] : undefined));
+    .transform((file) => file as File | undefined);

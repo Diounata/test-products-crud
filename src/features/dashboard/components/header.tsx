@@ -1,5 +1,6 @@
 "use client";
 import { Button } from "@heroui/react";
+import { LogOut } from "lucide-react";
 import Link from "next/link";
 
 import { DynamicLogo } from "@/components/dynamic-logo";
@@ -32,6 +33,7 @@ export function DashboardHeader() {
             await deleteAccessTokenCookie();
           }}
         >
+          <LogOut size={16} />
           Sair
         </Button>
       </div>

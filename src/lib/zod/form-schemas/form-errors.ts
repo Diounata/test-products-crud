@@ -15,4 +15,7 @@ export const formErrors = {
     max: "Senha deve ter no máximo 32 caracteres",
     doesNotMatch: "Senhas não coincidem",
   },
+  phone: {
+    invalid: "Telefone inválido",
+  },
 };

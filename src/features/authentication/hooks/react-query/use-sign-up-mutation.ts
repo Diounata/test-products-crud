@@ -10,9 +10,9 @@ interface Props {
   form: UseFormReturn<any>;
 }
 
-export function useSignInMutation({ form }: Props) {
+export function useSignUpMutation({ form }: Props) {
   return useMutation({
-    mutationFn: AuthenticationApi.signIn,
+    mutationFn: AuthenticationApi.signUp,
     onError: (e) => {
       if (e instanceof AxiosError) {
         handleAxiosRequestError({

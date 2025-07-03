@@ -12,7 +12,6 @@ import {
 } from "@/features/authentication/validators/sign-in-user-form-schema";
 
 export function useSignInUser() {
-  const signInMutation = useSignInMutation();
   const signInUserForm = useForm<SignInUserFormInput>({
     resolver: zodResolver(signInUserFormSchema),
     defaultValues: {
@@ -20,6 +19,8 @@ export function useSignInUser() {
       password: "",
     },
   });
+
+  const signInMutation = useSignInMutation({ form: signInUserForm });
 
   const onSubmit: SubmitHandler<SignInUserFormInput> = useCallback(
     async ({ email, password }) => {

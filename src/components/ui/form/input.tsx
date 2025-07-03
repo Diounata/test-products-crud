@@ -1,17 +1,21 @@
 import { Input as HeroInput, InputProps } from "@heroui/input";
+import { ChangeEvent } from "react";
 import { Controller, useFormContext } from "react-hook-form";
+
+import { formatNumberMask } from "@/utils/format-number-mask";
 
 interface Props extends InputProps {
   name: string;
+  mask?: string;
 }
 
-export function Input(props: Props) {
+export function Input({ name, mask, ...props }: Props) {
   const form = useFormContext();
 
   return (
     <Controller
       control={form.control}
-      name={props.name}
+      name={name}
       render={({
         field: { name, value, onChange, onBlur, ref },
         fieldState: { invalid, error },
@@ -24,7 +28,15 @@ export function Input(props: Props) {
           name={name}
           value={value}
           onBlur={onBlur}
-          onChange={onChange}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => {
+            if (mask) {
+              const value = formatNumberMask(e.currentTarget.value, mask);
+
+              e.currentTarget.value = value;
+            }
+
+            onChange(e);
+          }}
         />
       )}
     />

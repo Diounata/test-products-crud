@@ -31,3 +31,21 @@ export interface SignInResponseData {
     renewalsNumber: number;
   };
 }
+
+export interface SignUpRequestBody {
+  name: string;
+  email: string;
+  password: string;
+  verifyPassword: string;
+  phone: {
+    country: string;
+    ddd: string;
+    number: string;
+  };
+}
+
+export interface SignUpResponseData {
+  token: string;
+  codeIntern: string;
+  message: string;
+}

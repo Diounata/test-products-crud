@@ -3,9 +3,9 @@ import { Metadata } from "next";
 import { AuthenticationCard } from "@/features/authentication/components/authentication-card";
 
 export const metadata: Metadata = {
-  title: "Entrar",
+  title: "Cadastre-se",
 };
 
-export default function SignInPage() {
-  return <AuthenticationCard type="SIGN-IN" />;
+export default function SignUpPage() {
+  return <AuthenticationCard type="SIGN-UP" />;
 }

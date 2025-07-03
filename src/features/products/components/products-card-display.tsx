@@ -13,7 +13,7 @@ export function ProductsCardDisplay() {
   }
 
   return (
-    <section className="flex flex-col gap-4">
+    <section className="flex flex-col gap-4 mb-4">
       <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5">
         {listProductsQuery.data?.data.data.map((product) => (
           <ProductCard key={product.id} productId={product.id} />

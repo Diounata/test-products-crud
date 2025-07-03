@@ -37,13 +37,15 @@ export function DependenciesProviders({
   });
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <HeroUIProvider navigate={router.push}>
-        <NuqsAdapter>
-          <NextThemesProvider {...themeProps}>{children}</NextThemesProvider>
-          <ToastProvider placement="top-center" />
-        </NuqsAdapter>
-      </HeroUIProvider>
-    </QueryClientProvider>
+    <React.Suspense>
+      <QueryClientProvider client={queryClient}>
+        <HeroUIProvider navigate={router.push}>
+          <NuqsAdapter>
+            <NextThemesProvider {...themeProps}>{children}</NextThemesProvider>
+            <ToastProvider placement="top-center" />
+          </NuqsAdapter>
+        </HeroUIProvider>
+      </QueryClientProvider>
+    </React.Suspense>
   );
 }

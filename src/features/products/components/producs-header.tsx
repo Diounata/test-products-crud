@@ -4,6 +4,7 @@ import { Plus } from "lucide-react";
 import { parseAsBoolean, useQueryState } from "nuqs";
 
 import { CreateProductFormModal } from "./forms/create-product-form-modal";
+import { MetricChartModal } from "./metric-chart-modal";
 
 export function ProductsHeader() {
   const [, setIsCreatingProduct] = useQueryState(
@@ -15,15 +16,18 @@ export function ProductsHeader() {
     <header className="flex flex-col gap-4 py-4 sm:flex-row sm:items-center sm:justify-between">
       <h1 className="text-2xl font-bold">Produtos disponíveis</h1>
 
-      <Button
-        color="primary"
-        radius="sm"
-        onPress={() => {
-          setIsCreatingProduct(true);
-        }}
-      >
-        <Plus /> Novo
-      </Button>
+      <div className="flex items-center gap-2">
+        <MetricChartModal />
+        <Button
+          color="primary"
+          radius="sm"
+          onPress={() => {
+            setIsCreatingProduct(true);
+          }}
+        >
+          <Plus /> Novo
+        </Button>
+      </div>
 
       <CreateProductFormModal />
     </header>

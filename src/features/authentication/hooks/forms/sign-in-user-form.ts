@@ -4,6 +4,7 @@ import { useCallback } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import { setAccessTokenCookie } from "../../actions/set-access-token-cookie";
+import { useAuthenticationStore } from "../../stores/authentication-store";
 import { useSignInMutation } from "../react-query/use-sign-in-mutation";
 
 import {
@@ -12,6 +13,7 @@ import {
 } from "@/features/authentication/validators/sign-in-user-form-schema";
 
 export function useSignInUser() {
+  const { setToken } = useAuthenticationStore();
   const signInUserForm = useForm<SignInUserFormInput>({
     resolver: zodResolver(signInUserFormSchema),
     defaultValues: {
@@ -28,6 +30,7 @@ export function useSignInUser() {
 
       window.localStorage.setItem("accessToken", response.data.token);
       await setAccessTokenCookie(response.data.token);
+      setToken(response.data.token);
 
       addToast({
         title: "Autenticado com sucesso",

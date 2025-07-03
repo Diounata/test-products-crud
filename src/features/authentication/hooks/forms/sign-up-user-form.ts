@@ -3,6 +3,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useCallback } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
+import { useAuthenticationStore } from "../../stores/authentication-store";
+
 import { setAccessTokenCookie } from "@/features/authentication/actions/set-access-token-cookie";
 import { useSignUpMutation } from "@/features/authentication/hooks/react-query/use-sign-up-mutation";
 import {
@@ -11,6 +13,7 @@ import {
 } from "@/features/authentication/validators/sign-up-user-form-schema";
 
 export function useSignUpUser() {
+  const { setToken } = useAuthenticationStore();
   const signUpUserForm = useForm<SignUpUserFormInput>({
     resolver: zodResolver(signUpUserFormSchema),
     defaultValues: {
@@ -40,6 +43,7 @@ export function useSignUpUser() {
 
       window.localStorage.setItem("accessToken", response.data.token);
       await setAccessTokenCookie(response.data.token);
+      setToken(response.data.token);
 
       addToast({
         title: "Conta criada com sucesso",
